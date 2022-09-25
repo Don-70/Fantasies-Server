@@ -12,6 +12,7 @@ mongoose.connection
 
 const poemsSchema = new mongoose.Schema({
     name: String,
+    content: String,
     author: String,
     user: String,
 }, {timestamps: true})
