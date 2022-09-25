@@ -49,6 +49,17 @@ app.put('/api/poems/:id', async (req, res) => {
         console.log(error);
         res.status(400).json({'error': 'bad request'});
     }
-})
+});
+
+app.delete('/api/poems/:id', async (req, res) => {
+    try {
+        res.status(200).json(await Poems.findByIdAndDelete(
+            req.params.id
+        ));
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({'error': 'bad request'});
+    }
+});
 
 app.listen(PORT, () => console.log(`Express is listening on PORT: ${PORT}`));
