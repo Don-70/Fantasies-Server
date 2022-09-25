@@ -1,10 +1,12 @@
-const express = require('express');
-const { default: mongoose } = require('mongoose');
-const app = express();
 require('dotenv').config();
-const { PORT = 4000, DATABASSE_URL } = process.env;
+const { PORT = 4000, DATABASE_URL } = process.env;
+const express = require('express');
+const app = express();
+const mongoose = require('mongoose');
+const logger = require('morgan');
+const cors = require('cors');
 
-mongoose.connect(DATABASSE_URL);
+mongoose.connect(DATABASE_URL);
 mongoose.connection
     .on('open', () => console.log('You are connected to mongoose'))
     .on('close', () => console.log('You are disconnected from mongoose'))
@@ -18,6 +20,11 @@ const poemsSchema = new mongoose.Schema({
 }, {timestamps: true})
 
 const Poems = mongoose.model('Poems', poemsSchema);
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(logger('dev'));
+app.use(cors());
 
 //IDUCE
 
